@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>VehicleVision - Premium Car Valuation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3B82F6", 
+                        "primary-dark": "#2563EB",
+                        "secondary": "#06B6D4",
+                        "background-dark": "#0f172a", 
+                        "surface-dark": "#1e293b", 
+                        "surface-darker": "#020617", 
+                        "border-slate": "#334155", 
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.5)',
+                        'glow-lg': '0 0 40px rgba(59, 130, 246, 0.4)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; margin: 0; 
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-100 font-display overflow-x-hidden selection:bg-primary selection:text-white">
+
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] opacity-40"></div>
+        <div class="absolute bottom-[0%] right-[-5%] w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[120px] opacity-30"></div>
+    </div>
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-border-slate/50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer">
+                <div class="size-9 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-glow">
+                    <span class="material-symbols-outlined text-white text-xl">directions_car</span>
+                </div>
+                <h2 class="text-white text-xl font-bold tracking-tight">VehicleVision</h2>
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+                <a href="#" class="hover:text-white transition-colors">Home</a>
+                <a href="#market-stats" class="hover:text-white transition-colors">Market Data</a>
+                <a href="#process" class="hover:text-white transition-colors">How it Works</a>
+                </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-border-slate bg-surface-dark/50 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-semibold text-slate-300 uppercase tracking-wide">Live Market Data</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
+                    Predict Your Car's <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">True Market Value</span>
+                </h1>
+                <p class="text-lg text-slate-400 font-light leading-relaxed">
+                    Powered by advanced ML algorithms. Enter your vehicle details below to generate an instant, data-driven price estimate.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start mb-32">
+                
+                <div class="lg:col-span-8 glass-panel rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-6">
+                        <div class="p-2 bg-surface-dark rounded-lg border border-border-slate">
+                            <span class="material-symbols-outlined text-primary">tune</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Vehicle Parameters</h3>
+                            <p class="text-sm text-slate-500">Fill in the details to get accurate prediction</p>
+                        </div>
+                    </div>
+
+                    <form id="predictionForm" action="/predict" method="post" class="space-y-8 relative z-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">Showroom Price</label>
+                                <div class="relative group">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">currency_rupee</span>
+                                    <input id="present_price" type="number" step="any" placeholder="e.g. 12.5" class="w-full bg-surface-dark/50 border border-border-slate text-white rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-slate-600 hover:border-slate-500 hover:bg-surface-dark">
+                                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500 bg-surface-dark px-2 py-0.5 rounded border border-border-slate">Lakhs</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">Kms Driven</label>
+                                <div class="relative group">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">speed</span>
+                                    <input id="kms_driven" type="number" placeholder="e.g. 45000" class="w-full bg-surface-dark/50 border border-border-slate text-white rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-slate-600 hover:border-slate-500 hover:bg-surface-dark">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">Year of Purchase</label>
+                                <div class="relative group">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">calendar_today</span>
+                                    <input id="year" type="number" min="1990" max="2024" placeholder="e.g. 2019" class="w-full bg-surface-dark/50 border border-border-slate text-white rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-slate-600 hover:border-slate-500 hover:bg-surface-dark">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">No. of Owners</label>
+                                <div class="relative group">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">group</span>
+                                    <input id="owner" type="number" min="0" max="10" placeholder="e.g. 1" class="w-full bg-surface-dark/50 border border-border-slate text-white rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-slate-600 hover:border-slate-500 hover:bg-surface-dark">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">Fuel Type</label>
+                            <div class="grid grid-cols-3 gap-4">
+                                <label class="cursor-pointer group">
+                                    <input id="fuel_petrol" type="radio" name="fuel" value="Petrol" class="peer sr-only" checked>
+                                    <div class="border border-border-slate rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all hover:bg-surface-dark peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/10 peer-checked:shadow-[0_0_15px_rgba(59,130,246,0.15)] text-slate-400 bg-surface-dark/30">
+                                        <span class="material-symbols-outlined text-3xl">local_gas_station</span>
+                                        <span class="font-bold text-sm">Petrol</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="fuel" value="Diesel" class="peer sr-only fuel_diesel">
+                                    <div class="border border-border-slate rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all hover:bg-surface-dark peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/10 peer-checked:shadow-[0_0_15px_rgba(59,130,246,0.15)] text-slate-400 bg-surface-dark/30">
+                                        <span class="material-symbols-outlined text-3xl">oil_barrel</span>
+                                        <span class="font-bold text-sm">Diesel</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="fuel" value="CNG" class="peer sr-only">
+                                    <div class="border border-border-slate rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all hover:bg-surface-dark peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/10 peer-checked:shadow-[0_0_15px_rgba(59,130,246,0.15)] text-slate-400 bg-surface-dark/30">
+                                        <span class="material-symbols-outlined text-3xl">propane_tank</span>
+                                        <span class="font-bold text-sm">CNG</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">Seller Type</label>
+                                <div class="relative">
+                                    <select id="seller_type" class="w-full bg-surface-dark/50 border border-border-slate text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none outline-none transition-all hover:border-slate-500 cursor-pointer">
+                                        <option value="" disabled selected>Select Type</option>
+                                        <option value="Dealer">Dealer</option>
+                                        <option value="Individual">Individual</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-xl">storefront</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 ml-1">Transmission</label>
+                                <div class="relative">
+                                    <select id="transmission" class="w-full bg-surface-dark/50 border border-border-slate text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none outline-none transition-all hover:border-slate-500 cursor-pointer">
+                                        <option value="" disabled selected>Select Gear</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="Automatic">Automatic</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-xl">settings_applications</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="submit" class="group relative w-full py-4 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-bold text-lg shadow-glow hover:shadow-glow-lg hover:scale-[1.01] transition-all duration-300 overflow-hidden">
+                                <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                <span class="relative flex items-center justify-center gap-2">
+                                    Calculate Value
+                                    <span class="material-symbols-outlined">arrow_forward</span>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-4 space-y-6">
+                    
+                    <div id="resultCard" class="group relative bg-gradient-to-br from-surface-darker to-slate-900 border border-border-slate rounded-3xl p-8 text-center shadow-2xl overflow-hidden transition-all duration-500 hover:border-primary/50">
+                        <div class="absolute top-[-20%] right-[-20%] w-40 h-40 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-colors"></div>
+                        <div class="absolute bottom-[-20%] left-[-20%] w-40 h-40 bg-secondary/10 rounded-full blur-3xl"></div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-slate-400 text-sm font-semibold tracking-widest uppercase mb-4">Estimated Selling Price</h3>
+                            
+                            <div class="py-6 relative">
+                                <h2 class="text-5xl font-black text-white tracking-tighter">
+                                    <span class="text-2xl text-slate-500 font-medium align-top mr-1">₹</span>
+                                    <span id="priceValue">--.--</span>
+                                </h2>
+                                <p class="text-xl text-primary font-medium mt-1">Lakhs</p>
+                            </div>
+
+                            <div class="mt-6 pt-6 border-t border-slate-800 flex justify-center gap-6">
+                                <div class="text-center">
+                                    <p class="text-xs text-slate-500 uppercase">Accuracy</p>
+                                    <p class="text-emerald-400 font-bold">88.2%</p>
+                                </div>
+                                <div class="w-px h-8 bg-slate-800"></div>
+                                <div class="text-center">
+                                    <p class="text-xs text-slate-500 uppercase">Trend</p>
+                                    <p class="text-emerald-400 font-bold flex items-center gap-0.5 justify-center">
+                                        <span class="material-symbols-outlined text-sm">trending_up</span> Stable
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/5">
+                        <h4 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-secondary">verified_user</span>
+                            Why use VehicleVision?
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="flex gap-3 text-sm text-slate-400">
+                                <span class="material-symbols-outlined text-primary text-base shrink-0">check_circle</span>
+                                <span>Real-time analysis of depreciation rates based on car model and year.</span>
+                            </li>
+                            <li class="flex gap-3 text-sm text-slate-400">
+                                <span class="material-symbols-outlined text-primary text-base shrink-0">check_circle</span>
+                                <span>Considers specific fuel type and transmission market demand.</span>
+                            </li>
+                            <li class="flex gap-3 text-sm text-slate-400">
+                                <span class="material-symbols-outlined text-primary text-base shrink-0">check_circle</span>
+                                <span>Instant valuation for dealers and individual sellers.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="market-stats" class="mb-32">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-3">Market Intelligence</h2>
+                    <p class="text-slate-400">Real-time data processing across thousands of data points</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-surface-dark transition-colors border-l-4 border-l-primary">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-slate-400 text-sm font-medium uppercase">Vehicles Analyzed</span>
+                            <span class="material-symbols-outlined text-primary/50">database</span>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-1">300+</div>
+                        <div class="text-xs text-slate-500">Updated hourly</div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-surface-dark transition-colors border-l-4 border-l-secondary">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-slate-400 text-sm font-medium uppercase">Dealer Listings</span>
+                            <span class="material-symbols-outlined text-secondary/50">store</span>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-1">195</div>
+                        <div class="text-xs text-emerald-400 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">trending_up</span> +12% this month
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-surface-dark transition-colors border-l-4 border-l-purple-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-slate-400 text-sm font-medium uppercase">Models Accuracy</span>
+                            <span class="material-symbols-outlined text-purple-500/50">target</span>
+                        </div>
+                        <div class="text-3xl font-bold text-white mb-1">88%</div>
+                        <div class="text-xs text-slate-500">vs Actual Sales</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="process" class="mb-32 relative">
+                <div class="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="relative text-center group">
+                        <div class="w-24 h-24 mx-auto bg-surface-dark rounded-full border border-border-slate flex items-center justify-center mb-6 relative z-10 group-hover:border-primary transition-colors shadow-glow">
+                            <span class="material-symbols-outlined text-4xl text-primary">input</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">1. Enter Details</h3>
+                        <p class="text-slate-400 text-sm px-6">Input your car's year, model, mileage, and condition into our secure form.</p>
+                    </div>
+
+                    <div class="relative text-center group">
+                         <div class="w-24 h-24 mx-auto bg-surface-dark rounded-full border border-border-slate flex items-center justify-center mb-6 relative z-10 group-hover:border-primary transition-colors shadow-glow">
+                            <span class="material-symbols-outlined text-4xl text-secondary">neurology</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">2. AI Analysis</h3>
+                        <p class="text-slate-400 text-sm px-6">Our ML model compares your vehicle against millions of recent market transactions.</p>
+                    </div>
+
+                    <div class="relative text-center group">
+                         <div class="w-24 h-24 mx-auto bg-surface-dark rounded-full border border-border-slate flex items-center justify-center mb-6 relative z-10 group-hover:border-primary transition-colors shadow-glow">
+                            <span class="material-symbols-outlined text-4xl text-emerald-400">price_check</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">3. Get Value</h3>
+                        <p class="text-slate-400 text-sm px-6">Receive an instant, accurate selling price estimate you can trust.</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </main>
+
+    <footer class="border-t border-border-slate/50 bg-background-dark py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                     <div class="size-6 rounded bg-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xs">directions_car</span>
+                    </div>
+                    <span class="text-white font-bold text-lg">VehicleVision</span>
+                </div>
+                <p class="text-slate-500 text-sm">Next-generation vehicle valuation powered by advanced machine learning algorithms.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Product</h4>
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-primary">Valuation Tool</a></li>
+                    <li><a href="#" class="hover:text-primary">API Access</a></li>
+                    <li><a href="#" class="hover:text-primary">Enterprise</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Resources</h4>
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-primary">Market Reports</a></li>
+                    <li><a href="#" class="hover:text-primary">Documentation</a></li>
+                    <li><a href="#" class="hover:text-primary">Blog</a></li>
+                </ul>
+            </div>
+             <div>
+                <h4 class="text-white font-bold mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-primary">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center pt-8 border-t border-slate-800">
+            <p class="text-slate-600 text-sm">© 2024 VehicleVision AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

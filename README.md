@@ -5,6 +5,13 @@ The project demonstrates an end-to-end ML workflow, from data preprocessing and 
 
 This project was developed as part of my internship at CodeAlpha.
 
+🌐 Live Demo
+
+🚀 Deployed Application:
+👉 https://codealpha-vehiclevision.onrender.com
+
+Users can enter car details and instantly get a predicted resale price.
+
 📌 Problem Statement
 
 Determining the fair resale price of a used car is challenging due to multiple influencing factors such as age, usage, fuel type, ownership, and transmission.
@@ -40,17 +47,15 @@ Transmission	Manual / Automatic
 Selling_Price	Target variable (₹ Lakhs)
 🛠 Feature Engineering
 
-The following transformations were applied:
+Converted Year → Car Age
 
-Year → converted to Car_Age
+Removed non-informative features
 
-Car_Name → removed (non-predictive)
+One-hot encoded categorical variables
 
-Categorical features → One-Hot Encoding
+Applied StandardScaler to numerical features
 
-Numerical features → StandardScaler normalization
-
-Final model input features:
+Final features used for prediction:
 
 Present_Price
 Kms_Driven
@@ -63,60 +68,33 @@ Transmission_Manual
 
 🤖 Machine Learning Model
 
-Algorithm Used: Linear Regression
+Algorithm: Linear Regression
 
-Why Linear Regression?
-
-Interpretable
-
-Works well for price estimation
-
-Suitable for real-world regression problems
+Task: Regression (Price Prediction)
 
 📈 Model Performance
+Metric	Value
+R² Score	0.85
+RMSE	1.86 Lakhs
 
-The model was evaluated using standard regression metrics:
-
-R² Score: 0.85
-
-RMSE: 1.86 Lakhs
-
-Interpretation:
-
-The model explains ~85% of the variance in used car resale prices
-
-Average prediction error is around ₹1.8 Lakhs, which is reasonable for real-world pricing
+The model explains ~85% of the variance in used car resale prices.
 
 🌐 Web Application (Flask)
 
-The project includes a Flask-based web interface where users can:
+Flask backend with /predict API
 
-Enter car details (price, age, fuel type, etc.)
+HTML + Tailwind CSS frontend
 
-Submit the form
+JavaScript Fetch API for predictions
 
-Receive an instant resale price prediction
-
-Backend:
-
-Flask REST API
-
-/predict endpoint for inference
-
-Uses saved model and scaler
-
-Frontend:
-
-HTML + Tailwind CSS
-
-JavaScript for async prediction (Fetch API)
+Real-time ML inference
 
 📁 Project Structure
 CodeAlpha_VehicleVision/
 │
-├── app.py                 # Flask backend
-├── requirements.txt       # Dependencies
-├── README.md              # Project documentation
+├── app.py
+├── requirements.txt
+├── README.md
 ├── .gitignore
 │
 ├── model/
@@ -135,67 +113,52 @@ CodeAlpha_VehicleVision/
 └── data/
     └── car_data.csv
 
-🚀 How to Run Locally
-1️⃣ Clone the repository
+🚀 Run Locally
 git clone https://github.com/sm7313617-create/CodeAlpha_VehicleVision.git
 cd CodeAlpha_VehicleVision
-
-2️⃣ Create virtual environment
 python -m venv venv
-venv\Scripts\activate   # Windows
-
-3️⃣ Install dependencies
+venv\Scripts\activate
 pip install -r requirements.txt
-
-4️⃣ Run the application
 python app.py
 
 
-Open browser:
+Open:
 
 http://127.0.0.1:5000
 
 ☁️ Deployment
 
-The application is deployment-ready and can be hosted on platforms like Render using:
+The application is deployed on Render:
 
-requirements.txt
+🔗 https://codealpha-vehiclevision.onrender.com
 
-app.py
+Deployment stack:
 
-Saved model files (.pkl)
+Flask
+
+Gunicorn
+
+Scikit-learn
+
+Render Cloud Platform
 
 🧠 Key Learnings
 
-End-to-end ML project development
+End-to-end ML pipeline
 
-Feature engineering for regression
+Regression modeling
 
-Model evaluation using R² and RMSE
+Feature engineering
 
 Flask API development
 
-Frontend ↔ backend integration
+Frontend–backend integration
 
-Real-world debugging and deployment readiness
-
-🔮 Future Improvements
-
-Try ensemble models (Random Forest, XGBoost)
-
-Add confidence intervals for predictions
-
-Improve UI with visual analytics
-
-Add dataset expansion for better generalization
+Cloud deployment
 
 👤 Author
 
 Sayan Mondal
-Intern at CodeAlpha
+Intern @ CodeAlpha
 
 GitHub: https://github.com/sm7313617-create
-
-📜 License
-
-This project is for educational and internship purposes.

@@ -1,40 +1,27 @@
-🚗 VehicleVision – Used Car Price Prediction
+VehicleVision – Used Car Price Prediction
+Project Overview
 
-VehicleVision is a machine learning–based web application that predicts the resale price of used cars based on multiple real-world factors.
-The project demonstrates an end-to-end ML workflow, from data preprocessing and model training to deployment using Flask.
+VehicleVision is a machine learning web application that predicts the resale price of used cars based on multiple vehicle attributes. The project showcases an end-to-end machine learning pipeline, from data preprocessing and feature engineering to model deployment using Flask.
 
-This project was developed as part of my internship at CodeAlpha.
+This project was developed as part of an internship at CodeAlpha.
 
-🌐 Live Demo
+Problem Statement
 
-🚀 Deployed Application:
-👉 https://codealpha-vehiclevision.onrender.com
+Estimating the resale value of used cars is complex due to multiple influencing factors such as age, mileage, fuel type, ownership history, and transmission. This project aims to predict fair resale prices using historical car sales data.
 
-Users can enter car details and instantly get a predicted resale price.
+Objective
 
-📌 Problem Statement
+Predict used car selling price
 
-Determining the fair resale price of a used car is challenging due to multiple influencing factors such as age, usage, fuel type, ownership, and transmission.
+Apply regression techniques for price estimation
 
-VehicleVision aims to solve this problem by:
+Handle categorical and numerical features effectively
 
-Learning patterns from historical car sales data
+Deploy the trained model as a web application
 
-Predicting the resale price using regression techniques
+Dataset Description
 
-Providing an easy-to-use web interface for real-time predictions
-
-🎯 What This Project Predicts
-
-The model predicts:
-
-Selling Price of a used car (in ₹ Lakhs)
-
-This is a regression problem, not a classification problem.
-
-📊 Dataset Overview
-
-The dataset contains historical used-car sales data with the following key features:
+The dataset consists of historical used car sales data.
 
 Feature	Description
 Present_Price	Current showroom price (₹ Lakhs)
@@ -45,58 +32,44 @@ Fuel_Type	Petrol / Diesel
 Seller_Type	Dealer / Individual
 Transmission	Manual / Automatic
 Selling_Price	Target variable (₹ Lakhs)
-🛠 Feature Engineering
+Feature Engineering
 
-Converted Year → Car Age
+Converted manufacturing year into car age
 
-Removed non-informative features
+Dropped non-informative features
 
 One-hot encoded categorical variables
 
-Applied StandardScaler to numerical features
+Applied StandardScaler for normalization
 
-Final features used for prediction:
-
-Present_Price
-Kms_Driven
-Owner
-Car_Age
-Fuel_Type_Diesel
-Fuel_Type_Petrol
-Seller_Type_Individual
-Transmission_Manual
-
-🤖 Machine Learning Model
+Machine Learning Model
 
 Algorithm: Linear Regression
 
-Task: Regression (Price Prediction)
+Problem Type: Regression
 
-📈 Model Performance
+Model Performance
 Metric	Value
-R² Score	0.85
-RMSE	1.86 Lakhs
+R² Score	~0.85
+RMSE	~1.86 Lakhs
 
-The model explains ~85% of the variance in used car resale prices.
+The model explains approximately 85% of the variance in used car prices.
 
-🌐 Web Application (Flask)
+Web Application
 
-Flask backend with /predict API
+The Flask-based application allows users to:
 
-HTML + Tailwind CSS frontend
+Enter car details
 
-JavaScript Fetch API for predictions
+Submit inputs through a form
 
-Real-time ML inference
+Receive an instant resale price prediction
 
-📁 Project Structure
+Project Structure
 CodeAlpha_VehicleVision/
 │
 ├── app.py
 ├── requirements.txt
-├── README.md
-├── .gitignore
-│
 ├── model/
 │   ├── car_price_model.pkl
 │   └── scaler.pkl
@@ -113,7 +86,13 @@ CodeAlpha_VehicleVision/
 └── data/
     └── car_data.csv
 
-🚀 Run Locally
+Live Deployment
+
+The project is deployed on Render:
+
+https://codealpha-vehiclevision.onrender.com
+
+How to Run Locally
 git clone https://github.com/sm7313617-create/CodeAlpha_VehicleVision.git
 cd CodeAlpha_VehicleVision
 python -m venv venv
@@ -121,44 +100,23 @@ venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 
+Key Learnings
 
-Open:
+End-to-end regression modeling
 
-http://127.0.0.1:5000
+Feature engineering for structured data
 
-☁️ Deployment
+Flask-based ML deployment
 
-The application is deployed on Render:
+Frontend and backend integration
 
-🔗 https://codealpha-vehiclevision.onrender.com
+Practical experience with cloud deployment
 
-Deployment stack:
-
-Flask
-
-Gunicorn
-
-Scikit-learn
-
-Render Cloud Platform
-
-🧠 Key Learnings
-
-End-to-end ML pipeline
-
-Regression modeling
-
-Feature engineering
-
-Flask API development
-
-Frontend–backend integration
-
-Cloud deployment
-
-👤 Author
+Author
 
 Sayan Mondal
-Intern @ CodeAlpha
+Intern at CodeAlpha
 
-GitHub: https://github.com/sm7313617-create
+License
+
+This project is intended for educational and internship purposes only.
